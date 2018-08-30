@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.*?>
+<?import javafx.scene.text.*?>
+<?import org.controlsfx.glyphfont.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="90.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.HeaderController">
+   <children>
+      <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="30.0" maxWidth="40.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#onClick_btBack" prefHeight="30.0" prefWidth="40.0" text="🡄" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets right="10.0" />
+         </GridPane.margin>
+         <font>
+            <Font size="15.0" />
+         </font>
+         <HBox.margin>
+            <Insets right="10.0" />
+         </HBox.margin></Button>
+      <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="30.0" maxWidth="40.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#onClick_btMainMenu" prefHeight="30.0" prefWidth="40.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      	 <graphic>
+      	 	<Glyph fontFamily="FontAwesome" fontSize="15.0" icon="HOME" />  
+      	 </graphic>
+      </Button>
+   </children>
+   <padding>
+      <Insets bottom="10.0" />
+   </padding>
+</HBox>
