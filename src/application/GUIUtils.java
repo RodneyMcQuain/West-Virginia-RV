@@ -126,6 +126,14 @@ public class GUIUtils {
 		return isInvalid;
 	}
 	
+	public static void errorAlert(String title, String body) {
+    	Alert alError = new Alert(AlertType.ERROR);
+    	alError.setTitle(title);
+    	alError.setHeaderText(null);
+    	alError.setContentText(body);
+    	alError.showAndWait();	
+	}
+	
 	public static void emptyTextAlert() {
     	Alert alEmptyTextField = new Alert(AlertType.ERROR);
     	alEmptyTextField.setTitle("Required Empty Field");
