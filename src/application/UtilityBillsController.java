@@ -120,6 +120,12 @@ public class UtilityBillsController {
 			return;
 		}
 		
+		if (!GUIUtils.isNumber(tfAmount)) {
+			GUIUtils.errorAlert("Not Number", "Please enter a number into the amount textfield.");
+			return;
+		}
+		
+		
 		String utilityBillType = cbType.getValue();
 		int utilityBillTypeID = UtilityBillUtils.getUtilityBillTypeIDByString(utilityBillType);
 		BigDecimal amount = new BigDecimal(tfAmount.getText());
