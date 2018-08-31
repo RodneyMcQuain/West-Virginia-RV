@@ -48,7 +48,7 @@ public class ClientUtils {
 			if (clientBill != null) {
 				LocalDate datePaid = clientBill.getDatePaid();
 			
-				if (datePaid.isAfter(lastMonth)) {
+				if (datePaid.isBefore(lastMonth)) {
 					unpaidWeeklyClients.add(client);
 				}
 			} else { //client has no bills
@@ -75,7 +75,7 @@ public class ClientUtils {
 			if (clientBill != null) {
 				LocalDate datePaid = clientBill.getDatePaid();
 			
-				if (datePaid.isAfter(lastMonth)) {
+				if (datePaid.isBefore(lastMonth)) {
 					unpaidMonthlyClients.add(client);
 				}
 			} else { //client has no bills
