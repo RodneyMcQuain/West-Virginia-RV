@@ -78,21 +78,25 @@ public class GUIUtils {
 	public static boolean isPhoneNumber(TextField tfPhoneNumber) {
 		boolean isPhoneNumber = false;
 		String phoneNumber = tfPhoneNumber.getText();
-		final String phonePattern = "[(][0-9]{3}[)] [0-9]{3}-[0-9]{4}";
+		final String PHONE_PATTERN = "[(][0-9]{3}[)] [0-9]{3}-[0-9]{4}";
 		
-		if (phoneNumber.matches(phonePattern)) {
+		if (phoneNumber.matches(PHONE_PATTERN)) {
 			isPhoneNumber = true;
 		}
 	
 		return isPhoneNumber;
 	}
 	
-	public static void emptyTextAlert() {
-    	Alert alEmptyTextField = new Alert(AlertType.ERROR);
-    	alEmptyTextField.setTitle("Required Empty Field");
-    	alEmptyTextField.setHeaderText(null);
-    	alEmptyTextField.setContentText("Please enter information into all of the empty fields.");
-    	alEmptyTextField.showAndWait();	
+	public static boolean isNumber(TextField tfNumberField) {
+		boolean isNumber = false;
+		String numberField = tfNumberField.getText();
+		final String NUMBER_PATTERN = "[0-9]";
+		
+		if (numberField.matches(NUMBER_PATTERN)) {
+			isNumber = true;
+		}
+	
+		return isNumber;
 	}
 	
 	public static boolean isInvalidLotNumber(TextField tfLotNumber) {
@@ -120,6 +124,14 @@ public class GUIUtils {
 	    }
 	
 		return isInvalid;
+	}
+	
+	public static void emptyTextAlert() {
+    	Alert alEmptyTextField = new Alert(AlertType.ERROR);
+    	alEmptyTextField.setTitle("Required Empty Field");
+    	alEmptyTextField.setHeaderText(null);
+    	alEmptyTextField.setContentText("Please enter information into all of the empty fields.");
+    	alEmptyTextField.showAndWait();	
 	}
 	
 	public static void successfulAdditionAlert(String addedModel) {
