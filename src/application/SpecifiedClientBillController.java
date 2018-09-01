@@ -113,6 +113,19 @@ public class SpecifiedClientBillController {
 			return;
 		}
 		
+		if (cbPaymentType.getValue().equals(PaymentUtils.CHECK_PAYMENT_STRING) && !GUIUtils.isNumber(tfCheckNumber)) {
+			GUIUtils.errorAlert("Not Number", "Please enter a number into the check number textfield.");
+			return;
+		} else if (cbPaymentType.getValue().equals(PaymentUtils.DEBIT_PAYMENT_STRING) && !GUIUtils.isNumber(tfDebitTransactionNumber)) {
+			GUIUtils.errorAlert("Not Number", "Please enter a number into the debit transaction number textfield.");
+			return;
+		}
+		
+		if (!GUIUtils.isNumber(tfAmount)) {
+			GUIUtils.errorAlert("Not Number", "Please enter a number into the amount textfield.");
+			return;
+		}
+		
 		int clientBillID = clientBill.getClientBillID();
 		String paymentType = cbPaymentType.getValue();
 		int paymentTypeID = PaymentUtils.getPaymentTypeIDByString(paymentType);
