@@ -254,7 +254,7 @@ public class ClientBillDAOImpl implements ClientBillDAO {
 			ps.setInt(2, clientBill.getPaymentTypeID());
 			ps.setBigDecimal(3, clientBill.getAmount());
 			ps.setDate(4, Date.valueOf(clientBill.getDatePaid()));
-			ps.setInt(4, clientBill.getClientBillID());
+			ps.setInt(5, clientBill.getClientBillID());
 			ps.executeUpdate();
 		} catch (Exception ex) {
  			ex.printStackTrace();
