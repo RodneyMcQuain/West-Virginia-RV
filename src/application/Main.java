@@ -15,7 +15,9 @@ public class Main extends Application {
 	public static ArrayList<FXMLStringAndController> history;
 	
 	@Override
-	public void start(Stage primaryStage) {				
+	public void start(Stage primaryStage) {
+		MySQLUtils.initializeStaticRecords();
+		
 		theStage = primaryStage;
 		
 		try {
@@ -46,7 +48,6 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		history = new ArrayList<FXMLStringAndController>();
-		MySQLUtils.initializeStaticRecords();
 	
 		launch(args);
 	}
