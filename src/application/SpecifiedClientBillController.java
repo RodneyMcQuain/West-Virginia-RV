@@ -113,6 +113,7 @@ public class SpecifiedClientBillController {
 			return;
 		}
 		
+		int clientBillID = clientBill.getClientBillID();
 		String paymentType = cbPaymentType.getValue();
 		int paymentTypeID = PaymentUtils.getPaymentTypeIDByString(paymentType);
 		BigDecimal amount = new BigDecimal(tfAmount.getText());
@@ -122,7 +123,7 @@ public class SpecifiedClientBillController {
 		Payment payment = null;
 		if (paymentType.equals(PaymentUtils.CHECK_PAYMENT_STRING)) {
 			String checkNumber = tfCheckNumber.getText();
-			CheckPayment checkPayment = new CheckPayment(checkNumber);
+			CheckPayment checkPayment = new CheckPayment(clientBillID, checkNumber);
 			
 			CheckPaymentDAO checkPaymentDao = new CheckPaymentDAOImpl();
 			checkPaymentDao.updateCheckPayment(checkPayment);
@@ -132,7 +133,7 @@ public class SpecifiedClientBillController {
 			//to impl
 		}		
 		
-		ClientBill clientBill = new ClientBill(clientID, paymentTypeID, payment, amount, datePaid);
+		ClientBill clientBill = new ClientBill(clientBillID, clientID, paymentTypeID, payment, amount, datePaid);
 		
 		ClientBillDAO clientBillDao = new ClientBillDAOImpl();
 		clientBillDao.updateClientBill(clientBill);
