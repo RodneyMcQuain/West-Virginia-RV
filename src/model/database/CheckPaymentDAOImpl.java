@@ -68,7 +68,7 @@ public class CheckPaymentDAOImpl implements CheckPaymentDAO {
 		Connection conn = MySQLUtils.getConnection();
 		
 		try {
-			String sql = "UPDATE UtilityBill " + 
+			String sql = "UPDATE CheckPayment " + 
 						 "SET checkNumber = ? " +
 						 "WHERE checkPaymentID = ?;"; 
 			ps = conn.prepareStatement(sql);
