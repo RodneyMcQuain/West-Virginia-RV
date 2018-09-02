@@ -90,7 +90,7 @@ public class GUIUtils {
 	public static boolean isNumber(TextField tfNumberField) {
 		boolean isNumber = false;
 		String numberField = tfNumberField.getText();
-		final String NUMBER_PATTERN = "[0-9]{" + numberField.length() + "}";
+		final String NUMBER_PATTERN = "[0-9]\\d*(\\.\\d+)?";
 		
 		if (numberField.matches(NUMBER_PATTERN)) {
 			isNumber = true;
