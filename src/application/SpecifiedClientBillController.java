@@ -14,13 +14,13 @@ import javafx.scene.layout.GridPane;
 import model.CheckPayment;
 import model.ClientBill;
 import model.DebitPayment;
+import model.History;
 import model.Payment;
 import model.database.CheckPaymentDAO;
 import model.database.CheckPaymentDAOImpl;
 import model.database.ClientBillDAO;
 import model.database.ClientBillDAOImpl;
 import model.utility.FXMLReferences;
-import model.utility.HistoryUtils;
 import model.utility.PaymentUtils;
 
 public class SpecifiedClientBillController {
@@ -84,7 +84,7 @@ public class SpecifiedClientBillController {
 		SpecifiedClientBillController specifiedClientBillController = new SpecifiedClientBillController(clientBill);
 		
 		FXMLStringAndController fxmlStringAndController = new FXMLStringAndController(FXMLReferences.SPECIFIED_CLIENT_BILL, specifiedClientBillController);
-		HistoryUtils.addToHistory(fxmlStringAndController);		
+		History.addToHistory(fxmlStringAndController);		
 	}
 	
 	@FXML
@@ -159,7 +159,7 @@ public class SpecifiedClientBillController {
 		SpecifiedClientBillController specifiedClientBillController = new SpecifiedClientBillController(clientBill);
 		
 		FXMLStringAndController fxmlStringAndController = new FXMLStringAndController(FXMLReferences.SPECIFIED_CLIENT_BILL, specifiedClientBillController);
-		HistoryUtils.addToHistory(fxmlStringAndController);		
+		History.addToHistory(fxmlStringAndController);		
 	}
 	
 	@FXML

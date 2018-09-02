@@ -19,13 +19,13 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import model.Client;
 import model.ClientBill;
+import model.History;
 import model.Payment;
 import model.database.ClientBillDAO;
 import model.database.ClientBillDAOImpl;
 import model.database.ClientDAO;
 import model.database.ClientDAOImpl;
 import model.utility.FXMLReferences;
-import model.utility.HistoryUtils;
 
 public class SpecifiedClientController {
 	private int clientID;
@@ -114,7 +114,7 @@ public class SpecifiedClientController {
 		SpecifiedClientController specifiedClientController = new SpecifiedClientController(clientID);
 		
 		FXMLStringAndController fxmlStringAndController = new FXMLStringAndController(FXMLReferences.SPECIFIED_CLIENT, specifiedClientController);
-		HistoryUtils.addToHistory(fxmlStringAndController);		
+		History.addToHistory(fxmlStringAndController);		
 	}	
 	
 	@FXML

@@ -14,12 +14,12 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import model.Client;
+import model.History;
 import model.database.ClientDAO;
 import model.database.ClientDAOImpl;
 import model.utility.BillUtils;
 import model.utility.ClientUtils;
 import model.utility.FXMLReferences;
-import model.utility.HistoryUtils;
 
 public class MainMenuController {
 	@FXML public TableView<Client> tvClients = new TableView<>();
@@ -118,7 +118,7 @@ public class MainMenuController {
 		MainMenuController mainMenuController = new MainMenuController();
 		
 		FXMLStringAndController fxmlStringAndController = new FXMLStringAndController(FXMLReferences.MAIN_MENU, mainMenuController);
-		HistoryUtils.addToHistory(fxmlStringAndController);		
+		History.addToHistory(fxmlStringAndController);		
 	}
 	
 	@FXML

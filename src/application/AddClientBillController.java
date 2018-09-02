@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import model.CheckPayment;
 import model.ClientBill;
+import model.History;
 import model.Payment;
 import model.database.BillDAO;
 import model.database.BillDAOImpl;
@@ -19,7 +20,6 @@ import model.database.ClientBillDAO;
 import model.database.ClientBillDAOImpl;
 import model.utility.BillUtils;
 import model.utility.FXMLReferences;
-import model.utility.HistoryUtils;
 import model.utility.PaymentUtils;
 
 public class AddClientBillController {
@@ -59,7 +59,7 @@ public class AddClientBillController {
 		AddClientBillController addClientBillController = new AddClientBillController(clientID);
 
 		FXMLStringAndController fxmlStringAndController = new FXMLStringAndController(FXMLReferences.ADD_CLIENT_BILL, addClientBillController);
-		HistoryUtils.addToHistory(fxmlStringAndController);		
+		History.addToHistory(fxmlStringAndController);		
 	}
 	
 	@FXML

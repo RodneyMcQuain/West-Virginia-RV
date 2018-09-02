@@ -11,12 +11,12 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.CheckPayment;
+import model.History;
 import model.Payment;
 import model.UtilityBill;
 import model.database.UtilityBillDAO;
 import model.database.UtilityBillDAOImpl;
 import model.utility.FXMLReferences;
-import model.utility.HistoryUtils;
 import model.utility.PaymentUtils;
 import model.utility.UtilityBillUtils;
 
@@ -58,7 +58,7 @@ public class SpecifiedUtilityBillController {
 		SpecifiedUtilityBillController specifiedUtilityBillController = new SpecifiedUtilityBillController(utilityBill);
 		
 		FXMLStringAndController fxmlStringAndController = new FXMLStringAndController(FXMLReferences.SPECIFIED_UTILITY_BILL, specifiedUtilityBillController);
-		HistoryUtils.addToHistory(fxmlStringAndController);		
+		History.addToHistory(fxmlStringAndController);		
 	}
 	
 	@FXML

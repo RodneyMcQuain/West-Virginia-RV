@@ -4,10 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import model.Client;
+import model.History;
 import model.database.ClientDAO;
 import model.database.ClientDAOImpl;
 import model.utility.FXMLReferences;
-import model.utility.HistoryUtils;
 
 public class AddClientController {
 	@FXML public TextField tfFirstName;
@@ -28,7 +28,7 @@ public class AddClientController {
 		AddClientController addClientController = new AddClientController();
 		
 		FXMLStringAndController fxmlStringAndController = new FXMLStringAndController(FXMLReferences.ADD_CLIENT, addClientController);
-		HistoryUtils.addToHistory(fxmlStringAndController);		
+		History.addToHistory(fxmlStringAndController);		
 	}
 	
 	@FXML

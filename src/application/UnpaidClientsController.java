@@ -11,9 +11,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import model.Client;
+import model.History;
 import model.utility.ClientUtils;
 import model.utility.FXMLReferences;
-import model.utility.HistoryUtils;
 
 public class UnpaidClientsController {
 	@FXML public TableView<Client> tvUnpaidClients = new TableView<>();
@@ -74,6 +74,6 @@ public class UnpaidClientsController {
 		UnpaidClientsController unpaidClientsController = new UnpaidClientsController();
 		
 		FXMLStringAndController fxmlStringAndController = new FXMLStringAndController(FXMLReferences.UNPAID_CLIENTS, unpaidClientsController);
-		HistoryUtils.addToHistory(fxmlStringAndController);		
+		History.addToHistory(fxmlStringAndController);		
 	}
 }

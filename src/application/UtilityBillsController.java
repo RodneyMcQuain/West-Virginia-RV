@@ -17,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import model.CheckPayment;
+import model.History;
 import model.Payment;
 import model.UtilityBill;
 import model.database.BillDAO;
@@ -27,7 +28,6 @@ import model.database.UtilityBillDAO;
 import model.database.UtilityBillDAOImpl;
 import model.utility.BillUtils;
 import model.utility.FXMLReferences;
-import model.utility.HistoryUtils;
 import model.utility.PaymentUtils;
 import model.utility.UtilityBillUtils;
 
@@ -108,7 +108,7 @@ public class UtilityBillsController {
 		UtilityBillsController utilityBillsController = new UtilityBillsController();
 		
 		FXMLStringAndController fxmlStringAndController = new FXMLStringAndController(FXMLReferences.UTILITY_BILLS, utilityBillsController);
-		HistoryUtils.addToHistory(fxmlStringAndController);		
+		History.addToHistory(fxmlStringAndController);		
 	}
 	
 	@FXML
