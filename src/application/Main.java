@@ -1,7 +1,6 @@
 package application;
 	
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +11,6 @@ import javafx.scene.Scene;
 
 public class Main extends Application {
 	public static Stage theStage;
-	public static ArrayList<FXMLStringAndController> history;
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -46,9 +44,7 @@ public class Main extends Application {
 		return new Scene(root);
 	}
 	
-	public static void main(String[] args) {
-		history = new ArrayList<FXMLStringAndController>();
-	
+	public static void main(String[] args) {		
 		launch(args);
 	}
 }
