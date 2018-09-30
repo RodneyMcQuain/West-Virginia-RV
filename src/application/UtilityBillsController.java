@@ -146,7 +146,7 @@ public class UtilityBillsController {
 		utilityBillDao.insertUtilityBill(utilityBill);
 		
 		CheckPayment checkPayment = (CheckPayment) payment;
-		checkPayment.setCheckPaymentID(billID);
+		checkPayment.setPaymentID(billID);
 		CheckPaymentDAO checkPaymentDao = new CheckPaymentDAOImpl();
 		checkPaymentDao.insertCheckPayment((CheckPayment) checkPayment);
 		

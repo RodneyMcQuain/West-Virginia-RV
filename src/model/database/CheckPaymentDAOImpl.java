@@ -51,7 +51,7 @@ public class CheckPaymentDAOImpl implements CheckPaymentDAO {
 						 "VALUES (?, ?);"; 
 			
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1, checkPayment.getCheckPaymentID());
+			ps.setInt(1, checkPayment.getPaymentID());
 			ps.setString(2, checkPayment.getCheckNumber());
 			ps.executeUpdate();
 		} catch (Exception ex) {
@@ -73,7 +73,7 @@ public class CheckPaymentDAOImpl implements CheckPaymentDAO {
 						 "WHERE checkPaymentID = ?;"; 
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, checkPayment.getCheckNumber());
-			ps.setInt(2, checkPayment.getCheckPaymentID());
+			ps.setInt(2, checkPayment.getPaymentID());
 			ps.executeUpdate();
 		} catch (Exception ex) {
  			ex.printStackTrace();

@@ -113,7 +113,7 @@ public class AddClientBillController {
 		
 		if (paymentType.equals(PaymentUtils.CHECK_PAYMENT_STRING)) {
 			CheckPayment checkPayment = (CheckPayment) payment;
-			checkPayment.setCheckPaymentID(billID);
+			checkPayment.setPaymentID(billID);
 			
 			CheckPaymentDAO checkPaymentDao = new CheckPaymentDAOImpl();
 			checkPaymentDao.insertCheckPayment((CheckPayment) payment);
