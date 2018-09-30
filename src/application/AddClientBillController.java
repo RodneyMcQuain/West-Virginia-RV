@@ -105,16 +105,14 @@ public class AddClientBillController {
 		billDao.insertBill(BillUtils.CLIENT_BILL_ID);
 		
 		int billID = billDao.getMostRecentBillID();
+		payment.setPaymentID(billID);
 		
 		ClientBill clientBill = new ClientBill(billID, clientID, paymentTypeID, payment, amount, datePaid);
 		
 		ClientBillDAO clientBillDao = new ClientBillDAOImpl();
 		clientBillDao.insertClientBill(clientBill);
 		
-		if (paymentType.equals(PaymentUtils.CHECK_PAYMENT_STRING)) {
-			CheckPayment checkPayment = (CheckPayment) payment;
-			checkPayment.setPaymentID(billID);
-			
+		if (paymentType.equals(PaymentUtils.CHECK_PAYMENT_STRING)) {			
 			CheckPaymentDAO checkPaymentDao = new CheckPaymentDAOImpl();
 			checkPaymentDao.insertCheckPayment((CheckPayment) payment);
 		} else if (paymentType.equals(PaymentUtils.DEBIT_PAYMENT_STRING)) {
