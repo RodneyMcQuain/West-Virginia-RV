@@ -52,6 +52,18 @@ public class SpecifiedClientBillController {
 		int paymentTypeID = clientBill.getPaymentTypeID();
 		String paymentType = PaymentUtils.getPaymentTypeByID(paymentTypeID);
 		Payment payment = clientBill.getPayment();
+		BigDecimal amount = clientBill.getAmount();
+		LocalDate datePaid = clientBill.getDatePaid();
+		
+		setPaymentControls(paymentTypeID, payment);
+		
+		lblSpecifiedClientBill.setText(clientBill.toString());
+		cbPaymentType.setValue(paymentType);
+		tfAmount.setText(amount.toString());
+		dpDatePaid.setValue(datePaid);
+	}
+	
+	private void setPaymentControls(int paymentTypeID, Payment payment) {
 		if (paymentTypeID == PaymentUtils.CHECK_PAYMENT_ID) {
 			gpSpecifiedClientBill.add(tfCheckNumber, 1, 1);
 			CheckPayment checkPayment = (CheckPayment) payment;
@@ -60,14 +72,7 @@ public class SpecifiedClientBillController {
 			gpSpecifiedClientBill.add(tfDebitTransactionNumber, 1, 1);
 			DebitPayment debitPayment = (DebitPayment) payment;
 			tfDebitTransactionNumber.setText(debitPayment.getDebitTransactionNumber());
-		}
-		BigDecimal amount = clientBill.getAmount();
-		LocalDate datePaid = clientBill.getDatePaid();
-		
-		lblSpecifiedClientBill.setText(clientBill.toString());
-		cbPaymentType.setValue(paymentType);
-		tfAmount.setText(amount.toString());
-		dpDatePaid.setValue(datePaid);
+		}		
 	}
 	
 	private void removePaymentControls() {
@@ -113,16 +118,7 @@ public class SpecifiedClientBillController {
 			return;
 		}
 		
-		if (cbPaymentType.getValue().equals(PaymentUtils.CHECK_PAYMENT_STRING) && !GUIUtils.isNumber(tfCheckNumber)) {
-			GUIUtils.errorAlert("Not Number", "Please enter a number into the check number textfield.");
-			return;
-		} else if (cbPaymentType.getValue().equals(PaymentUtils.DEBIT_PAYMENT_STRING) && !GUIUtils.isNumber(tfDebitTransactionNumber)) {
-			GUIUtils.errorAlert("Not Number", "Please enter a number into the debit transaction number textfield.");
-			return;
-		}
-		
-		if (!GUIUtils.isNumber(tfAmount)) {
-			GUIUtils.errorAlert("Not Number", "Please enter a number into the amount textfield.");
+		if (!isValidPayment() || !isValidNumber()) {
 			return;
 		}
 		
@@ -133,6 +129,43 @@ public class SpecifiedClientBillController {
 		LocalDate datePaid = dpDatePaid.getValue();
 		int clientID = clientBill.getClientID();
 		
+		Payment payment = updateSpecifiedPayment(paymentType, clientBillID);
+
+		ClientBill clientBill = new ClientBill(clientBillID, clientID, paymentTypeID, payment, amount, datePaid);
+		
+		ClientBillDAO clientBillDao = new ClientBillDAOImpl();
+		clientBillDao.updateClientBill(clientBill);
+		
+		GUIUtils.successfulUpdateAlert("Client Bill");
+		reloadSpecifiedClientBill();
+	}
+
+	private boolean isValidPayment() {
+		boolean isValidPayment = true;
+		
+		if (cbPaymentType.getValue().equals(PaymentUtils.CHECK_PAYMENT_STRING) && !GUIUtils.isNumber(tfCheckNumber)) {
+			GUIUtils.errorAlert("Not Number", "Please enter a number into the check number textfield.");
+			isValidPayment = false;
+		} else if (cbPaymentType.getValue().equals(PaymentUtils.DEBIT_PAYMENT_STRING) && !GUIUtils.isNumber(tfDebitTransactionNumber)) {
+			GUIUtils.errorAlert("Not Number", "Please enter a number into the debit transaction number textfield.");
+			isValidPayment = false;
+		}
+		
+		return isValidPayment;
+	}
+	
+	private boolean isValidNumber() {
+		boolean isValidPayment = true;
+		
+		if (!GUIUtils.isNumber(tfAmount)) {
+			GUIUtils.errorAlert("Not Number", "Please enter a number into the amount textfield.");
+			isValidPayment = false;
+		}
+		
+		return isValidPayment;
+	}
+	
+	private Payment updateSpecifiedPayment(String paymentType, int clientBillID) {
 		Payment payment = null;
 		if (paymentType.equals(PaymentUtils.CHECK_PAYMENT_STRING)) {
 			String checkNumber = tfCheckNumber.getText();
@@ -144,15 +177,9 @@ public class SpecifiedClientBillController {
 			payment = (Payment) checkPayment;
 		} else if (paymentType.equals(PaymentUtils.DEBIT_PAYMENT_STRING)) {
 			//to impl
-		}		
+		}
 		
-		ClientBill clientBill = new ClientBill(clientBillID, clientID, paymentTypeID, payment, amount, datePaid);
-		
-		ClientBillDAO clientBillDao = new ClientBillDAOImpl();
-		clientBillDao.updateClientBill(clientBill);
-		
-		GUIUtils.successfulUpdateAlert("Client Bill");
-		reloadSpecifiedClientBill();
+		return payment;		
 	}
 	
 	private void reloadSpecifiedClientBill() {        
