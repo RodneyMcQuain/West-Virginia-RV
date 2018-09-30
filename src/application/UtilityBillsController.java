@@ -120,11 +120,9 @@ public class UtilityBillsController {
 			return;
 		}
 		
-		if (!GUIUtils.isNumber(tfAmount)) {
-			GUIUtils.errorAlert("Not Number", "Please enter a number into the amount textfield.");
+		if (!isValidNumber()) {
 			return;
 		}
-		
 		
 		String utilityBillType = cbType.getValue();
 		int utilityBillTypeID = UtilityBillUtils.getUtilityBillTypeIDByString(utilityBillType);
@@ -135,23 +133,33 @@ public class UtilityBillsController {
 		Payment payment = new CheckPayment(checkNumber);
 		
 		BillDAO billDao = new BillDAOImpl();
+		UtilityBillDAO utilityBillDao = new UtilityBillDAOImpl();
+		CheckPaymentDAO checkPaymentDao = new CheckPaymentDAOImpl();
+
 		billDao.insertBill(BillUtils.UTILITY_BILL_ID);
-		
 		int billID = billDao.getMostRecentBillID();
-		
+		payment.setPaymentID(billID);
+
 		//for the forseeable future only checks will be used to pay for utilities
 		UtilityBill utilityBill = new UtilityBill(billID, utilityBillTypeID, PaymentUtils.CHECK_PAYMENT_ID, payment, amount, datePaid); 
-		
-		UtilityBillDAO utilityBillDao = new UtilityBillDAOImpl();
 		utilityBillDao.insertUtilityBill(utilityBill);
 		
 		CheckPayment checkPayment = (CheckPayment) payment;
-		checkPayment.setPaymentID(billID);
-		CheckPaymentDAO checkPaymentDao = new CheckPaymentDAOImpl();
-		checkPaymentDao.insertCheckPayment((CheckPayment) checkPayment);
+		checkPaymentDao.insertCheckPayment(checkPayment);
 		
 		GUIUtils.successfulAdditionAlert("Utility Bill");
 		reloadUtilityBills();
+	}
+	
+	private boolean isValidNumber() {
+		boolean isValidPayment = true;
+		
+		if (!GUIUtils.isNumber(tfAmount)) {
+			GUIUtils.errorAlert("Not Number", "Please enter a number into the amount textfield.");
+			isValidPayment = false;
+		}
+		
+		return isValidPayment;
 	}
 	
 	private void reloadUtilityBills() {
