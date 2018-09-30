@@ -73,16 +73,7 @@ public class AddClientBillController {
 			return;
 		}
 
-		if (cbPaymentType.getValue().equals(PaymentUtils.CHECK_PAYMENT_STRING) && !GUIUtils.isNumber(tfCheckNumber)) {
-			GUIUtils.errorAlert("Not Number", "Please enter a number into the check number textfield.");
-			return;
-		} else if (cbPaymentType.getValue().equals(PaymentUtils.DEBIT_PAYMENT_STRING) && !GUIUtils.isNumber(tfDebitTransactionNumber)) {
-			GUIUtils.errorAlert("Not Number", "Please enter a number into the debit transaction number textfield.");
-			return;
-		}
-		
-		if (!GUIUtils.isNumber(tfAmount)) {
-			GUIUtils.errorAlert("Not Number", "Please enter a number into the amount textfield.");
+		if (!isValidPayment() || !isValidNumber()) {
 			return;
 		}
 		
@@ -91,7 +82,52 @@ public class AddClientBillController {
 		BigDecimal amount = new BigDecimal(tfAmount.getText());
 		LocalDate datePaid = dpDatePaid.getValue();
 		
+		Payment payment = getSpecifiedPayment(paymentType);
+		
+		BillDAO billDao = new BillDAOImpl();
+		ClientBillDAO clientBillDao = new ClientBillDAOImpl();
+
+		billDao.insertBill(BillUtils.CLIENT_BILL_ID);
+		int billID = billDao.getMostRecentBillID();
+		payment.setPaymentID(billID);
+		
+		ClientBill clientBill = new ClientBill(billID, clientID, paymentTypeID, payment, amount, datePaid);
+		clientBillDao.insertClientBill(clientBill);
+		
+		insertSpecifiedPayment(paymentType, payment);
+		
+		GUIUtils.successfulAdditionAlert("Client Bill");
+		reloadAddClientBill();
+	}
+	
+	private boolean isValidPayment() {
+		boolean isValidPayment = true;
+		
+		if (cbPaymentType.getValue().equals(PaymentUtils.CHECK_PAYMENT_STRING) && !GUIUtils.isNumber(tfCheckNumber)) {
+			GUIUtils.errorAlert("Not Number", "Please enter a number into the check number textfield.");
+			isValidPayment = false;
+		} else if (cbPaymentType.getValue().equals(PaymentUtils.DEBIT_PAYMENT_STRING) && !GUIUtils.isNumber(tfDebitTransactionNumber)) {
+			GUIUtils.errorAlert("Not Number", "Please enter a number into the debit transaction number textfield.");
+			isValidPayment = false;
+		}
+		
+		return isValidPayment;
+	}
+	
+	private boolean isValidNumber() {
+		boolean isValidPayment = true;
+		
+		if (!GUIUtils.isNumber(tfAmount)) {
+			GUIUtils.errorAlert("Not Number", "Please enter a number into the amount textfield.");
+			isValidPayment = false;
+		}
+		
+		return isValidPayment;
+	}
+	
+	private Payment getSpecifiedPayment(String paymentType) {
 		Payment payment = null;
+		
 		if (paymentType.equals(PaymentUtils.CHECK_PAYMENT_STRING)) {
 			String checkNumber = tfCheckNumber.getText();
 			CheckPayment checkPayment = new CheckPayment(checkNumber);
@@ -101,26 +137,16 @@ public class AddClientBillController {
 			//to impl
 		}
 		
-		BillDAO billDao = new BillDAOImpl();
-		billDao.insertBill(BillUtils.CLIENT_BILL_ID);
-		
-		int billID = billDao.getMostRecentBillID();
-		payment.setPaymentID(billID);
-		
-		ClientBill clientBill = new ClientBill(billID, clientID, paymentTypeID, payment, amount, datePaid);
-		
-		ClientBillDAO clientBillDao = new ClientBillDAOImpl();
-		clientBillDao.insertClientBill(clientBill);
-		
+		return payment;
+	}
+	
+	private void insertSpecifiedPayment(String paymentType, Payment payment) {
 		if (paymentType.equals(PaymentUtils.CHECK_PAYMENT_STRING)) {			
 			CheckPaymentDAO checkPaymentDao = new CheckPaymentDAOImpl();
 			checkPaymentDao.insertCheckPayment((CheckPayment) payment);
 		} else if (paymentType.equals(PaymentUtils.DEBIT_PAYMENT_STRING)) {
 			//to impl
 		}
-		
-		GUIUtils.successfulAdditionAlert("Client Bill");
-		reloadAddClientBill();
 	}
 	
 	private void reloadAddClientBill() {
