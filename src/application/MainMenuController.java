@@ -82,7 +82,11 @@ public class MainMenuController {
 	}
 	
 	private void setNumberOfUnpaidClients() {
-		int numberOfUnpaidClients = ClientUtils.gettNumberOfUnpaidClients();
+		ClientDAO clientDao = new ClientDAOImpl();
+		List<Client> weeklyClients = clientDao.getAllWeeklyClients();
+		List<Client> monthlyClients = clientDao.getAllMonthlyClients();
+		
+		int numberOfUnpaidClients = ClientUtils.getNumberOfUnpaidClients(weeklyClients, monthlyClients);
 		
 		if (numberOfUnpaidClients == 0) 
 			lblNumberOfUnpaidClients.setTextFill(Color.GREEN);

@@ -12,6 +12,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import model.Client;
 import model.History;
+import model.database.ClientDAO;
+import model.database.ClientDAOImpl;
 import model.utility.ClientUtils;
 import model.utility.FXMLReferences;
 
@@ -43,10 +45,14 @@ public class UnpaidClientsController {
 	}
 	
 	private ObservableList<Client> getClientData() {
-		List<Client> monthlyClients = ClientUtils.getUnpaidMonthlyClients();
-		List<Client> weeklyClients = ClientUtils.getUnpaidWeeklyClients();
-		weeklyClients.addAll(monthlyClients);
-		List<Client> unpaidClients = weeklyClients;
+		ClientDAO clientDao = new ClientDAOImpl();
+		List<Client> weeklyClients = clientDao.getAllWeeklyClients();
+		List<Client> monthlyClients = clientDao.getAllMonthlyClients();
+
+		List<Client> unpaidWeeklyClients = ClientUtils.getUnpaidWeeklyClients(weeklyClients);
+		List<Client> unpaidMonthlyClients = ClientUtils.getUnpaidMonthlyClients(monthlyClients);
+		unpaidWeeklyClients.addAll(unpaidMonthlyClients);
+		List<Client> unpaidClients = unpaidWeeklyClients;
 		
 		ObservableList<Client> olUnpaidClients = FXCollections.observableArrayList(unpaidClients);
 		
