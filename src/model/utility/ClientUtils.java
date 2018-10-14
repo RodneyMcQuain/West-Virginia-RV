@@ -22,22 +22,19 @@ public class ClientUtils {
 		return clients.size();
 	}
 	
-	public static int gettNumberOfUnpaidClients() {		
-		List<Client> weeklyClients = getUnpaidWeeklyClients();
-		int numberOfUnpaidWeeklyClients = weeklyClients.size();
+	public static int getNumberOfUnpaidClients(List<Client> weeklyClients, List<Client> monthlyClients) {		
+		List<Client> unpaidWeeklyClients = getUnpaidWeeklyClients(weeklyClients);
+		int numberOfUnpaidWeeklyClients = unpaidWeeklyClients.size();
 		
-		List<Client> monthlyClients = getUnpaidMonthlyClients();
-		int numberOfUnpaidMonthlyClients = monthlyClients.size();
+		List<Client> unpaidMonthlyClients = getUnpaidMonthlyClients(monthlyClients);
+		int numberOfUnpaidMonthlyClients = unpaidMonthlyClients.size();
 		
 		return numberOfUnpaidWeeklyClients + numberOfUnpaidMonthlyClients;
 	}
 	
-	public static List<Client> getUnpaidWeeklyClients() {
-		ClientDAO clientDao = new ClientDAOImpl();		
-		List<Client> weeklyClients = clientDao.getAllWeeklyClients();
+	public static List<Client> getUnpaidWeeklyClients(List<Client> weeklyClients) {
 		ClientBillDAO clientBillDao = new ClientBillDAOImpl();
 		List<Client> unpaidWeeklyClients = new ArrayList<Client>();
-
 		LocalDate today = LocalDate.now();
 		LocalDate lastMonth = today.minusMonths(1);
 		
@@ -59,9 +56,7 @@ public class ClientUtils {
 		return unpaidWeeklyClients;
 	}
 	
-	public static List<Client> getUnpaidMonthlyClients() {
-		ClientDAO clientDao = new ClientDAOImpl();		
-		List<Client> monthlyClients = clientDao.getAllMonthlyClients();
+	public static List<Client> getUnpaidMonthlyClients(List<Client> monthlyClients) {
 		ClientBillDAO clientBillDao = new ClientBillDAOImpl();
 		List<Client> unpaidMonthlyClients = new ArrayList<Client>();
 
