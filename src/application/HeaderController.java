@@ -1,6 +1,6 @@
 package application;
 
-import java.util.ArrayList;
+import java.util.Stack;
 
 import javafx.fxml.FXML;
 import model.History;
@@ -9,11 +9,10 @@ import model.utility.FXMLReferences;
 public class HeaderController {
 	@FXML
 	public void onClick_btBack() {
-		History.removeMostRecent();
-		ArrayList<FXMLStringAndController> history = History.getHistory();
-		int lastIndexNum = history.size() - 1;
+		History.removeMostRecent(); //This is called so there is not an endless loop of going back to the same scene
+		Stack<FXMLStringAndController> history = History.getHistory();
 						
-		FXMLStringAndController fxmlStringAndController = history.get(lastIndexNum);
+		FXMLStringAndController fxmlStringAndController = history.pop();
 		fxmlStringAndController.goToFXML();
 	}
 	
