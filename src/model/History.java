@@ -1,49 +1,43 @@
 package model;
 
-import java.util.ArrayList;
+import java.util.Stack;
 
 import application.FXMLStringAndController;
 
 public class History {
-	private static ArrayList<FXMLStringAndController> history = new ArrayList<FXMLStringAndController>();
+	private static Stack<FXMLStringAndController> history = new Stack<FXMLStringAndController>();
 	
 	private History() {
 		
 	}
 	
-	public static ArrayList<FXMLStringAndController> getHistory() {
+	public static Stack<FXMLStringAndController> getHistory() {
 		return history;
 	}
 	
-	public static void addToHistory(FXMLStringAndController fxmlStringAndController) {
-		int historySize = history.size();
-				
-		if (isInitialAdd(fxmlStringAndController, historySize))
-			return;
-		
-		add(fxmlStringAndController, historySize);
+	public static void addToHistory(FXMLStringAndController fxmlStringAndController) {				
+		if (isInitialAdd())
+			history.push(fxmlStringAndController);
+		else
+			addIfNonDuplicate(fxmlStringAndController);
 	}
 	
-	private static boolean isInitialAdd(FXMLStringAndController fxmlStringAndController, int historySize) {
+	private static boolean isInitialAdd() {
 		boolean isInitialAdd = false;
 		
-		if (historySize == 0) {
-			history.add(fxmlStringAndController);
+		if (history.isEmpty()) {
 			isInitialAdd = true;
 		}
 		
 		return isInitialAdd;
 	}
 	
-	private static void add(FXMLStringAndController fxmlStringAndController, int historySize) {
-		if (historySize > 0)
-			if (!fxmlStringAndController.equals(history.get(historySize - 1)))
-				history.add(fxmlStringAndController);
+	private static void addIfNonDuplicate(FXMLStringAndController fxmlStringAndController) {
+		if (!fxmlStringAndController.equals(history.peek()))
+			history.push(fxmlStringAndController);
 	}
 	
 	public static void removeMostRecent() {
-		int historySize = history.size();
-
-		history.remove(historySize - 1);
+		history.pop();
 	}
 }
